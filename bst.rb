@@ -17,10 +17,11 @@ class BinaryTree
     @max_number = max_number.nil? ? num : [max_number, num].max
   end
 
-  def show_in_order(node = @tree)    
-    show_in_order(node.left) if !node.left.nil?
-    node.counter.times { p node.value }
-    show_in_order(node.right) if !node.right.nil?
+  def show_in_order(node = @tree, result = [])    
+    show_in_order(node.left, result) if !node.left.nil?
+    node.counter.times { result << node.value }
+    show_in_order(node.right, result) if !node.right.nil?
+    result
   end
 
   private
@@ -54,3 +55,6 @@ class BinaryTree
   end
 end
 
+bst = BinaryTree.new
+500.times { bst.store_number(rand(0..500)) }
+p bst.show_in_order
