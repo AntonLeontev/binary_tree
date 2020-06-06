@@ -1,5 +1,5 @@
 require "rspec"
-require_relative "../bst.rb"
+require_relative '../binary_tree_uniq.rb'
 
 describe 'show_in_reverse_order' do
   before(:all) do 

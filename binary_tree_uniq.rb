@@ -87,7 +87,7 @@ class BinaryTree
       when 0
         node.counter += 1
       when 1
-        node.right.nil? ? node.right = Node.new(num) : add_node(node.right, num)       
+        node.right.nil? ? node.right = Node.new(num) : add_node(node.right, num)      
       end
     end
   end
