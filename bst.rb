@@ -38,6 +38,10 @@ class BinaryTree
     clone
   end
 
+  def contains?(num)
+    search_node(@tree, num)
+  end
+
   def show_in_reverse_order(node = @tree, 
                             result = Array.new(@numbers_stored), 
                             i = 0)
@@ -59,7 +63,7 @@ class BinaryTree
     i
   end
 
-  def remove_descendants(node)
+  def remove_descendantsendants(node)
     remove_descendants(node.left) if node.left
     remove_descendants(node.right) if node.right
     node.left = nil
@@ -86,6 +90,10 @@ class BinaryTree
         node.right.nil? ? node.right = Node.new(num) : add_node(node.right, num)       
       end
     end
+  end
+
+  def search_node(node, num)
+    
   end
 
   class Node
