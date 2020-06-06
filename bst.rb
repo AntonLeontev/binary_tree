@@ -63,7 +63,7 @@ class BinaryTree
     i
   end
 
-  def remove_descendantsendants(node)
+  def remove_descendants(node)
     remove_descendants(node.left) if node.left
     remove_descendants(node.right) if node.right
     node.left = nil
@@ -93,7 +93,15 @@ class BinaryTree
   end
 
   def search_node(node, num)
-    
+    case num <=> node.value 
+    when -1
+      return search_node(node.left, num) if node.left
+    when 0
+      return true
+    when 1
+      return search_node(node.right, num) if node.right
+    end
+    false
   end
 
   class Node
