@@ -6,17 +6,21 @@ class Node
     @tree_size = 0
   end
 
-  def add_node(num)
+  def store_number(num)
     @tree_size += 1
     if @value.nil?
       @value = num
       @left  = Node.new
       @right = Node.new
     elsif num <= @value
-      @left.add_node(num)
+      @left.store_number(num)
     else
-      @right.add_node(num)
+      @right.store_number(num)
     end
+  end
+
+  def store_array(arr)
+    arr.each { |v| self.store_number(v) }
   end
 
   def show_in_order
@@ -42,24 +46,67 @@ class Node
   end
 
   def contains?(num)
-    !!search_node(num)
+    return false if @value.nil?
+    case num <=> @value
+    when -1
+      @left.contains?(num)
+    when 0
+      true
+    when 1
+      @right.contains?(num)
+    end
   end  
 
   def remove_node(num)
-    
+    node_to_delete = removing_search(num)
+    if !node_to_delete
+      puts 'There is no such value in DB'
+    elsif node_to_delete.count_children < 2
+      node_to_delete.delete_node_with_0_or_1_child
+    else
+      donor = node_to_delete.left.max_node
+      node_to_delete.value = donor.value
+      donor.delete_node_with_0_or_1_child
+    end
   end
 
   protected
 
-  def search_node(num)
-    return false if @value.nil?
-    case num <=> @value
-    when -1
-      @left.search_node(num)
-    when 0
-      self
-    when 1
-      @right.search_node(num)
+  def removing_search(num)
+    result = 
+      if @value.nil?
+        false
+      else
+        case num <=> @value
+        when -1
+          @left.removing_search(num)
+        when 0
+          self
+        when 1
+          @right.removing_search(num)
+        end
+      end
+    @tree_size -= 1 if result
+    result 
+  end
+
+  def count_children
+    [@left, @right].count { |x| x.value != nil }
+  end
+
+  def max_node
+    @right.value ? right.max_node : self
+  end
+
+  def delete_node_with_0_or_1_child
+    if @left.value
+      @value = @left.value
+      @right = @left.right
+      @left  = @left.left
+    else
+      @value = @right.value
+      @left  = @right.left
+      @right = @right.right
     end
   end
 
@@ -74,11 +121,9 @@ class Node
   end
 
   def root_to_leaves(node, clone)
-    clone.add_node(node.value)
+    clone.store_number(node.value)
     root_to_leaves(node.left, clone) if node.left.value
     root_to_leaves(node.right, clone) if node.right.value
   end
-
-
 
 end

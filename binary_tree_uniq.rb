@@ -17,6 +17,10 @@ class BinaryTree
     @max_number = max_number.nil? ? num : [max_number, num].max
   end
 
+  def store_array(arr)
+    arr.each { |v| self.store_number(v) }
+  end
+
   def show_in_order
     result = Array.new(@numbers_stored)
     in_order_traversal(@tree, result, 0)
