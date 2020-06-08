@@ -1,4 +1,4 @@
-class BinaryTree
+class BinaryTreeUniq
   attr_reader :numbers_stored, :sum, :min_number, :max_number
 
   def initialize
@@ -37,25 +37,13 @@ class BinaryTree
   end
 
   def copy
-    clone = BinaryTree.new
+    clone = BinaryTreeUniq.new
     root_to_leaves(@tree, clone)
     clone
   end
 
   def contains?(num)
     search_node(@tree, num)
-  end
-
-  def show_in_reverse_order(node = @tree, 
-                            result = Array.new(@numbers_stored), 
-                            i = 0)
-    arr = node.right ? show_in_reverse_order(node.right, result, i) : [result, i] 
-    node.counter.times do 
-      arr[0][arr[1]] = node.value 
-      arr[1] += 1 
-    end
-    arr = show_in_reverse_order(node.left, arr[0], arr[1]) if node.left
-    arr[1] == @numbers_stored ? arr[0] : arr
   end
 
   private

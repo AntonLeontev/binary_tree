@@ -1,6 +1,12 @@
 class Node
 
+  attr_reader :tree_size
+
+  protected
+
   attr_accessor :value, :left, :right, :tree_size
+
+  public
 
   def initialize
     @tree_size = 0
@@ -60,13 +66,15 @@ class Node
   def remove_node(num)
     node_to_delete = removing_search(num)
     if !node_to_delete
-      puts 'There is no such value in DB'
+      false
     elsif node_to_delete.count_children < 2
       node_to_delete.delete_node_with_0_or_1_child
+      true
     else
       donor = node_to_delete.left.max_node
       node_to_delete.value = donor.value
       donor.delete_node_with_0_or_1_child
+      true
     end
   end
 
@@ -99,15 +107,10 @@ class Node
   end
 
   def delete_node_with_0_or_1_child
-    if @left.value
-      @value = @left.value
-      @right = @left.right
-      @left  = @left.left
-    else
-      @value = @right.value
-      @left  = @right.left
-      @right = @right.right
-    end
+    child  = @left.value ? @left : @right
+    @value = child.value
+    @right = child.right
+    @left  = child.left
   end
 
   private
