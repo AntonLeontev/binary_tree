@@ -1,9 +1,9 @@
 require "rspec"
-require_relative "../bst.rb"
+require_relative '../binary_tree_uniq.rb'
 
 describe 'show_in_order' do
   before(:all) do 
-    @bst = BinaryTree.new
+    @bst = BinaryTreeUniq.new
     200.times {@bst.store_number (rand(-200..200))}
     @arr = @bst.show_in_order
   end

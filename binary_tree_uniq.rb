@@ -1,4 +1,4 @@
-class BinaryTree
+class BinaryTreeUniq
   attr_reader :numbers_stored, :sum, :min_number, :max_number
 
   def initialize
@@ -17,6 +17,10 @@ class BinaryTree
     @max_number = max_number.nil? ? num : [max_number, num].max
   end
 
+  def store_array(arr)
+    arr.each { |v| self.store_number(v) }
+  end
+
   def show_in_order
     result = Array.new(@numbers_stored)
     in_order_traversal(@tree, result, 0)
@@ -33,7 +37,7 @@ class BinaryTree
   end
 
   def copy
-    clone = BinaryTree.new
+    clone = BinaryTreeUniq.new
     root_to_leaves(@tree, clone)
     clone
   end
@@ -75,7 +79,7 @@ class BinaryTree
       when 0
         node.counter += 1
       when 1
-        node.right.nil? ? node.right = Node.new(num) : add_node(node.right, num)       
+        node.right.nil? ? node.right = Node.new(num) : add_node(node.right, num)      
       end
     end
   end
